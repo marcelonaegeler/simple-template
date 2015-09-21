@@ -1,24 +1,24 @@
 var _ = (function() {
+  var render = function(el, ct) {
+    el.appendChild(ct);
+  };
+
   var createElement = function(t, opt, html, cb) {
     var tag = document.createElement(t);
-    tag.innerHTML = html;
     for(var i in opt) {
       tag[i] = opt[i];
     }
+
+    if(typeof html == 'string')
+      tag.innerHTML = html;
+    else if(typeof html == 'object')
+      tag.appendChild(html);
+
     return tag;
   };
 
-
   return {
-    createElement: createElement
+    render: render
+    , createElement: createElement
   };
 })();
-
-function test() {
-  console.log('ok');
-};
-
-var el = _.createElement('a', { href: 'javascript:void(0);', onclick: test, className: 'teste hehe' }, 'Teste de link');
-
-var render = document.querySelector('.render');
-render.appendChild(el);
